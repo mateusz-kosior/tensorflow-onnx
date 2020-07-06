@@ -126,7 +126,11 @@ def get_tf_node_attr(node, name):
 
 
 def get_tf_version():
-    return LooseVersion(tf.__version__)
+    try:
+        __tmp = tf.__version__
+    except AttributeError:
+        __tmp = tf.version.VERSION
+    return LooseVersion(__tmp)
 
 
 def tflist_to_onnx(g, shape_override):

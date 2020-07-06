@@ -24,15 +24,23 @@ logger = logging.getLogger(__name__)
 
 
 def is_tf2():
-    return tf.__version__.startswith("2.")
+    try:
+        __tmp = tf.__version__
+    except AttributeError:
+        __tmp = tf.version.VERSION
+    return __tmp.startswith("2.")
 
 
 def _not_implemented_tf_placeholder(name):
     """Creates a placeholder function for missing Tensorflow imports"""
 
     def not_implemented_tf_placeholder(*args, **kwargs):
+        try:
+            __tmp = tf.__version__
+        except AttributeError:
+            __tmp = tf.version.VERSION
         raise NotImplementedError(
-            f'Tensorflow verison {tf.__version__} does not implement '
+            f'Tensorflow verison {__tmp} does not implement '
             f'`{name}`, try converting your model with a different version.'
         )
 

@@ -32,7 +32,10 @@ def save_pretrained_model(sess, outputs, feeds, out_dir, model_name="pretrained"
             return
 
         print("Save tf version, python version and installed packages")
-        tf_version = tf.__version__
+        try:
+            tf_version = tf.__version__
+        except AttributeError:
+            tf_version = tf.version.VERSION
         py_version = sys.version
         pip_packages = subprocess.check_output([sys.executable, "-m", "pip", "freeze", "--all"])
         pip_packages = pip_packages.decode("UTF-8")

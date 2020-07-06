@@ -12,7 +12,11 @@ import os
 import types
 
 import tensorflow as tf
-TF2 = tf.__version__.startswith("2.")
+try:
+    __tmp = tf.__version__
+except AttributeError:
+    __tmp = tf.version.VERSION
+TF2 = __tmp.startswith("2.")
 
 from . import constants  # pylint: disable=wrong-import-position
 
